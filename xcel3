@@ -1,0 +1,76 @@
+import csv
+import difflib
+list=[]
+list1=[]
+list2=[]
+list3=[]
+list4=[]
+list6=[]
+list5=[]
+temp=[]
+mfinal=[]#each coloumn each list
+final=[] #list in list
+f1=open("1.csv",'r')
+f5=open("1.csv",'r')
+f3=open("1.csv",'r')
+f4=open("1.csv",'r')
+file1=csv.reader(f1)
+file5=csv.reader(f5)
+file4=csv.reader(f4)
+file3=csv.reader(f3)
+#next(f1)
+for line1 in file3: #list1 to product sheet1
+    if line1!='':
+      list4.append(line1[0])
+print(list4)
+for line1 in file1: #list5 to packet sheet1
+    if line1!='':
+      list5.append(line1[1])
+print(list5)
+for line1 in file4: #list6 to url  sheet1
+    if line1!='':
+      list6.append(line1[3])
+print(list6)
+for line1 in file5: #list1 to mrp sheet1
+    if line1!='':
+      list1.append(line1[2])
+print(list1)
+f2=open('2.csv','r')
+file2=csv.reader(f2)
+for line2 in file2:#list2 to store incorrect values sheet
+    if line2 !='':
+      list2.append(line2[0])
+#print(list2)
+
+for inc in list2:
+    diff1 = 0
+    for c in list4:
+     s = difflib.SequenceMatcher(isjunk=None, a=inc ,b=c)
+     diff = s.ratio() * 100
+     if diff > diff1:
+        temp=c
+        diff1=diff
+    list3.append(temp)
+#print(list3)
+print(len(list4))
+print(len(list5))
+print(len(list1))
+print(len(list6))
+for j in range(len(list3)):
+    for k in range(1,len(list4)-1):
+        s = difflib.SequenceMatcher(isjunk=None, a=list3[j], b=list4[k])
+        diff = s.ratio() * 100
+        if diff==100:
+            mfinal.append(list4[k])
+            mfinal.append(list5[k])
+            mfinal.append(list1[k])
+            mfinal.append(list6[k])
+print(mfinal)
+
+
+
+
+with open('3.csv','w',newline="") as f3:
+    file3=csv.writer(f3)
+    for i in range(len(mfinal)):
+     file3.writerow([mfinal[i]])

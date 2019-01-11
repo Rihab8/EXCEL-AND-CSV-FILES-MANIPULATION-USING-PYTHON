@@ -1,0 +1,42 @@
+import csv
+import difflib
+import string
+
+import strip as strip
+
+list1=[]
+list2=[]
+list3=[]
+list4=[]
+temp=[]
+f1=open("1.csv",'r')
+file1=csv.reader(f1)
+next(f1)
+for line1 in file1: #list1 to store sheet1
+       list1.append(line1[0])
+while '' in list1:
+    list1.remove('')
+print(list1)
+f2=open('2.csv','r')
+file2=csv.reader(f2)
+for line2 in file2:#list2 to store incorrect values sheet
+    if line2 != '':
+      list2.append(line2[0])
+print(list2)
+
+for inc in list2:
+    diff1 = 0
+    for c in list1:
+     s = difflib.SequenceMatcher(isjunk=None, a=inc ,b=c)
+     diff = s.ratio() * 100
+     if diff > diff1:
+        temp=c
+        diff1=diff
+    list3.append(temp)
+print(list3)
+#with open('3.csv','w',newline="") as f3:
+ #   file3=csv.writer(f3)
+  #  for i in range(len(list3)):
+   #  file3.writerow([[list3[i]]])
+
+
